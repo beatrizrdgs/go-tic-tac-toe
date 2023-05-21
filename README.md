@@ -1,4 +1,4 @@
-# Txc Tac Toe
+# Tic-Tac-Toe
 This is a Command Line Interface Tic Tac Toe game implemented in Go using structs, interfaces and pointers, where the player can play against an artificial intelligence. 
 
 ## Installation & Usage
