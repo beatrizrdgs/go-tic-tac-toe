@@ -22,7 +22,7 @@ func (g *Game) PlayGame() {
 
 	winner := EMPTY
 
-	for b.checkSpaces() != 0 && winner == EMPTY {
+	for b.checkSpaces() != 0 && winner == EMPTY && !b.checkTie() {
 		for _, player := range g.player {
 			player.Move(&b)
 			winner = b.checkWin()
