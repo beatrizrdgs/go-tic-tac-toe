@@ -1,5 +1,5 @@
 # Tic-Tac-Toe
-This is a Command Line Interface Tic Tac Toe game implemented in Go using structs, interfaces and pointers, where the player can play against an artificial intelligence. 
+This is a Command Line Interface Tic Tac Toe game implemented in Go, where the player can play against an artificial intelligence. 
 
 ## Installation & Usage
 To run this program, you need to have the Go compiler installed on your system. You can follow the installation instructions on [Go's website](https://go.dev/)
