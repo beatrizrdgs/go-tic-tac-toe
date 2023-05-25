@@ -6,6 +6,20 @@ type Board struct {
 	grid [3][3]string
 }
 
+var PossibleWins = [8][3][2]int{
+	// rows
+	{{0, 0}, {0, 1}, {0, 2}},
+	{{1, 0}, {1, 1}, {1, 2}},
+	{{2, 0}, {2, 1}, {2, 2}},
+	// columns
+	{{0, 0}, {1, 0}, {2, 0}},
+	{{0, 1}, {1, 1}, {2, 1}},
+	{{0, 2}, {1, 2}, {2, 2}},
+	// diagonals
+	{{0, 0}, {1, 1}, {2, 2}},
+	{{0, 2}, {1, 1}, {2, 0}},
+}
+
 func NewBoard() Board {
 	b := Board{}
 	b.resetBoard()
@@ -49,23 +63,45 @@ func (b *Board) checkSpaces() int {
 
 func (b *Board) checkWin() string {
 
-	for row := 0; row < 3; row++ {
-		if b.grid[row][0] == b.grid[row][1] && b.grid[row][0] == b.grid[row][2] {
-			return b.grid[row][0]
-		}
-	}
+	players := []string{"X", "O"}
 
-	for column := 0; column < 3; column++ {
-		if b.grid[0][column] == b.grid[1][column] && b.grid[0][column] == b.grid[2][column] {
-			return b.grid[0][column]
+	for _, player := range players {
+		for _, win := range PossibleWins {
+			winner := true
+			for _, position := range win {
+				row, column := position[0], position[1]
+				if b.grid[row][column] != player {
+					winner = false
+					break
+				}
+			}
+			if winner {
+				return player
+			}
 		}
-	}
-	// Diagonal
-	if b.grid[0][0] == b.grid[1][1] && b.grid[0][0] == b.grid[2][2] {
-		return b.grid[0][0]
-	}
-	if b.grid[0][2] == b.grid[1][1] && b.grid[0][2] == b.grid[2][0] {
-		return b.grid[0][2]
 	}
 	return EMPTY
+}
+
+func (b *Board) checkTie() bool {
+	isTie := true
+	for _, line := range PossibleWins {
+		symbol1 := b.grid[line[0][0]][line[0][1]]
+		winIsPossible := true
+		for _, position := range line[1:] {
+			symbol2 := b.grid[position[0]][position[1]]
+			if symbol1 != symbol2 && symbol1 != EMPTY && symbol2 != EMPTY {
+				winIsPossible = false
+				break
+			}
+			if symbol2 != EMPTY {
+				symbol1 = symbol2
+			}
+		}
+		if winIsPossible {
+			isTie = false
+			break
+		}
+	}
+	return isTie
 }
